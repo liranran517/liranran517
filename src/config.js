@@ -7,7 +7,7 @@ export default {
   // page2部分
   page2: {
     authorImg: 'page1.jpg', // 作者头像
-    xinhui: '本人小橙，是一位深度学习系统研发工程师。', // 幸会
+    xinhui: '本人，是一位深度学习系统研发工程师。', // 幸会
     qiuzhi: '深度学习系统研发', // 求职意向
     guanyuwo: '愿天下无BUG' // 关于我
   },
@@ -77,7 +77,7 @@ export default {
   },
   // page6部分
   page6: {
-    github: 'https://github.com/smallOrangei',
+    github: 'https://github.com/liranran517',
     email: 'Mailto:liranran517@outlook.com?Subject=邮箱标题&Body=邮箱内容！'
   }
 }
