@@ -3,858 +3,762 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky | 深度学习算法工程师</title>
-    <!-- Three.js 3D图形库 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- Anime.js 动画库 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <!-- AOS 滚动动画 -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- Particles.js 粒子效果 -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <title>Ms. Li 数据分析师</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            background: #0a0a2a;
-            color: #fff;
-            overflow-x: hidden;
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             min-height: 100vh;
-            touch-action: manipulation;
+            padding: 0;
+            color: white;
+            overflow-x: hidden;
         }
 
-        #starfield {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-        }
-
-        #particles-js {
+        /* 背景效果 */
+        .bg-effect {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
+        }
+
+        .bg-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(121, 68, 154, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(41, 196, 255, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(255, 166, 0, 0.2) 0%, transparent 50%);
+            animation: bgPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* 网格线效果 */
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 0 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                0 0 50px rgba(41, 196, 255, 0.2),
+                0 0 100px rgba(121, 68, 154, 0.1);
+            overflow: hidden;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+            margin-bottom: 40px;
         }
 
-        header {
-            padding: 100px 0 60px;
+        /* 头部 */
+        .header {
+            background: linear-gradient(135deg, rgba(10, 12, 32, 0.8) 0%, rgba(22, 33, 62, 0.8) 100%);
+            color: white;
+            padding: 80px 40px;
             text-align: center;
             position: relative;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            overflow: hidden;
         }
 
-        .name {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, #00c6ff, #0072ff, #6a11cb);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px rgba(0, 114, 255, 0.5);
-            letter-spacing: 2px;
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(41, 196, 255, 0.1), transparent);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
         }
 
         .title {
-            font-size: 1.6rem;
-            margin-bottom: 30px;
-            color: #a0a0ff;
-        }
-
-        .typed-text {
-            font-size: 1.4rem;
-            min-height: 40px;
-            color: #70d6ff;
-            margin-bottom: 40px;
-        }
-
-        .section {
-            padding: 80px 0;
-            position: relative;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            text-align: center;
-            margin-bottom: 50px;
-            color: #70d6ff;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
-            margin: 15px auto;
-            border-radius: 2px;
-        }
-
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .tech-card {
-            background: rgba(16, 18, 47, 0.7);
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(0, 114, 255, 0.3);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .tech-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, #00c6ff, #0072ff);
-        }
-
-        .tech-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 114, 255, 0.4);
-            border-color: #0072ff;
-        }
-
-        .tech-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: #00c6ff;
-        }
-
-        .tech-name {
-            font-size: 1.4rem;
+            font-size: 48px;
+            font-weight: 700;
             margin-bottom: 15px;
-            color: #fff;
+            background: linear-gradient(45deg, #29c4ff, #79449a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 3s ease-in-out infinite alternate;
         }
 
-        .tech-desc {
-            color: #a0a0ff;
-            line-height: 1.6;
-            font-size: 0.95rem;
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 20px rgba(41, 196, 255, 0.5); }
+            100% { text-shadow: 0 0 30px rgba(41, 196, 255, 0.8), 0 0 40px rgba(121, 68, 154, 0.6); }
         }
 
-        .interests-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .interest-item {
-            background: rgba(16, 18, 47, 0.7);
-            padding: 15px 25px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            color: #00c6ff;
-            border: 1px solid rgba(0, 114, 255, 0.3);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-        }
-
-        .interest-item:hover {
-            background: rgba(0, 114, 255, 0.2);
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(0, 114, 255, 0.5);
-        }
-
-        .goals-container {
-            background: rgba(16, 18, 47, 0.7);
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 30px;
-            border: 1px solid rgba(0, 114, 255, 0.3);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-        }
-
-        .goal-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid rgba(0, 114, 255, 0.2);
-        }
-
-        .goal-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .goal-icon {
-            font-size: 1.8rem;
-            margin-right: 20px;
-            color: #0072ff;
-            min-width: 50px;
-        }
-
-        .goal-content h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: #00c6ff;
-        }
-
-        .goal-content p {
-            color: #a0a0ff;
-            line-height: 1.6;
-        }
-
-        footer {
-            background: rgba(10, 12, 30, 0.9);
-            padding: 50px 0 25px;
-            text-align: center;
-            border-top: 1px solid rgba(0, 114, 255, 0.3);
-        }
-
-        .contact-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
+        .subtitle {
+            font-size: 20px;
+            color: #bdc3c7;
             margin-bottom: 40px;
-            flex-wrap: wrap;
+            animation: subtitleFade 4s ease-in-out infinite;
         }
 
+        @keyframes subtitleFade {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* 按钮效果 */
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1.1rem;
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #29c4ff, #79449a);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 14px;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn-github {
-            background: linear-gradient(45deg, #00c6ff, #0072ff);
-            color: white;
-        }
-
-        .btn-email {
-            background: linear-gradient(45deg, #0072ff, #6a11cb);
-            color: white;
+            box-shadow: 0 4px 15px rgba(41, 196, 255, 0.3);
+            animation: btnPulse 2s ease-in-out infinite;
         }
 
         .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(41, 196, 255, 0.5);
+        }
+
+        @keyframes btnPulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(41, 196, 255, 0.3); }
+            50% { box-shadow: 0 6px 25px rgba(41, 196, 255, 0.5); }
+        }
+
+        /* 章节样式 */
+        .section {
+            padding: 60px 40px;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, #29c4ff, #79449a);
+            border-radius: 2px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: white;
+            text-align: center;
+            background: linear-gradient(45deg, #29c4ff, #79449a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleSlide 1s ease-out;
+        }
+
+        @keyframes titleSlide {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* 技术栈部分 */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: skillCardAppear 0.8s ease-out;
+        }
+
+        @keyframes skillCardAppear {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .skill-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(41, 196, 255, 0.3);
+            border-color: rgba(41, 196, 255, 0.5);
+        }
+
+        .skill-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .skill-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #29c4ff;
+            text-align: center;
+        }
+
+        .skill-list {
+            list-style: none;
+            text-align: center;
+        }
+
+        .skill-list li {
+            padding: 8px 0;
+            color: #bdc3c7;
+            font-size: 14px;
+            animation: listItemAppear 1s ease-out;
+        }
+
+        @keyframes listItemAppear {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* 研究方向部分 */
+        .research-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .research-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .research-item {
+            background: linear-gradient(135deg, rgba(41, 196, 255, 0.2), rgba(121, 68, 154, 0.2));
+            padding: 15px 25px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: researchItemFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes researchItemFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .research-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 114, 255, 0.4);
+            box-shadow: 0 6px 20px rgba(41, 196, 255, 0.4);
+            border-color: rgba(41, 196, 255, 0.5);
         }
 
-        .copyright {
-            color: #a0a0ff;
-            margin-top: 30px;
-            font-size: 0.9rem;
+        /* 职业意向部分 */
+        .career-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
 
-        /* 流星样式 */
-        .meteor {
-            position: fixed;
-            top: 0;
-            width: 2px;
-            height: 2px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1), 0 0 10px 2px #fff;
-            z-index: -1;
-            opacity: 0;
+        .career-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            animation: careerCardAppear 1s ease-out;
         }
 
-        /* 神经网络连接线效果 */
-        .neural-network {
-            position: fixed;
-            top: 0;
+        @keyframes careerCardAppear {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .career-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(121, 68, 154, 0.3);
+            border-color: rgba(121, 68, 154, 0.5);
+        }
+
+        .career-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+            animation: iconRotate 4s linear infinite;
+        }
+
+        @keyframes iconRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .career-subtitle {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #79449a;
+            text-align: center;
+        }
+
+        .career-desc {
+            text-align: center;
+            color: #bdc3c7;
+            line-height: 1.6;
+        }
+
+        /* 项目展示部分 */
+        .projects-section {
+            background: rgba(10, 12, 32, 0.5);
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            animation: projectCardAppear 1s ease-out;
+        }
+
+        @keyframes projectCardAppear {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(41, 196, 255, 0.3);
+            border-color: rgba(41, 196, 255, 0.5);
+        }
+
+        .project-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #29c4ff;
+        }
+
+        .project-tech {
+            font-size: 12px;
+            color: #79449a;
+            margin-bottom: 20px;
+            background: rgba(121, 68, 154, 0.2);
+            padding: 8px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .project-desc {
+            color: #bdc3c7;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* 页脚 */
+        .footer {
+            background: linear-gradient(135deg, rgba(10, 12, 32, 0.8) 0%, rgba(22, 33, 62, 0.8) 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #29c4ff, transparent);
+            animation: footerLine 4s ease-in-out infinite;
         }
 
-        /* 波纹效果 */
-        .ripple {
+        @keyframes footerLine {
+            0%, 100% { transform: scaleX(0.5); opacity: 0.5; }
+            50% { transform: scaleX(1); opacity: 1; }
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: #29c4ff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
             position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
-            transform: scale(0);
-            animation: ripple-animation 0.6s linear;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #29c4ff;
+            transition: width 0.3s ease;
         }
 
-        @keyframes ripple-animation {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
+        .footer-links a:hover {
+            color: #79449a;
         }
 
-        /* 移动端优化 */
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            color: #bdc3c7;
+            margin-top: 20px;
+        }
+
+        /* 响应式设计 */
         @media (max-width: 768px) {
-            .name {
-                font-size: 2.5rem;
+            .container {
+                margin: 20px 10px;
             }
-            
+
+            .header {
+                padding: 60px 20px;
+            }
+
             .title {
-                font-size: 1.3rem;
+                font-size: 36px;
             }
-            
-            .typed-text {
-                font-size: 1.2rem;
+
+            .section {
+                padding: 40px 20px;
             }
-            
+
             .section-title {
-                font-size: 1.8rem;
+                font-size: 24px;
             }
-            
-            .tech-grid {
+
+            .skills-container {
                 grid-template-columns: 1fr;
+            }
+
+            .career-container {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer {
+                padding: 40px 20px;
+            }
+
+            .footer-links {
+                flex-direction: column;
                 gap: 20px;
             }
-            
-            .contact-buttons {
-                flex-direction: column;
-                align-items: center;
-                gap: 15px;
-            }
-            
-            .btn {
-                width: 80%;
-                max-width: 250px;
-            }
-            
-            .interest-item {
-                padding: 12px 20px;
-                font-size: 1rem;
-            }
-            
-            .goals-container {
-                padding: 20px;
-            }
-            
-            .goal-item {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .goal-icon {
-                margin-right: 0;
-                margin-bottom: 15px;
-            }
-            
-            header {
-                padding: 80px 0 40px;
-                min-height: 80vh;
-            }
         }
 
-        @media (max-width: 480px) {
-            .name {
-                font-size: 2rem;
-            }
-            
-            .title {
-                font-size: 1.1rem;
-            }
-            
-            .typed-text {
-                font-size: 1rem;
-            }
-            
-            .section-title {
-                font-size: 1.6rem;
-            }
-            
-            .tech-card {
-                padding: 20px;
-            }
-            
-            .interest-item {
-                padding: 10px 18px;
-                font-size: 0.9rem;
-            }
+        /* 滚动动画 */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
         }
 
-        /* 防止移动端点击延迟 */
-        * {
-            -webkit-tap-highlight-color: transparent;
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <!-- Three.js星空背景 -->
-    <div id="starfield"></div>
-    
-    <!-- 粒子背景 -->
-    <div id="particles-js"></div>
-    
-    <!-- 神经网络连接线效果 -->
-    <canvas id="neural-network" class="neural-network"></canvas>
-    
-    <!-- 流星容器 -->
-    <div id="meteors-container"></div>
-    
+    <!-- 背景效果 -->
+    <div class="bg-effect"></div>
+    <div class="grid-lines"></div>
+
     <div class="container">
-        <header>
-            <h1 class="name" data-aos="fade-down">Lucky</h1>
-            <h2 class="title" data-aos="fade-up" data-aos-delay="200">深度学习算法工程师 & AI研究员</h2>
-            <div class="typed-text" id="typed-text" data-aos="fade-up" data-aos-delay="400"></div>
-        </header>
-        
-        <section class="section" id="tech-stack">
-            <h2 class="section-title" data-aos="fade-up">技术栈</h2>
-            <div class="tech-grid">
-                <div class="tech-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="tech-icon">🧠</div>
-                    <h3 class="tech-name">深度学习框架</h3>
-                    <p class="tech-desc">PyTorch, TensorFlow, Keras, MXNet, 神经网络架构设计</p>
+        <!-- 头部 -->
+        <div class="header">
+            <div class="header-content">
+                <h1 class="title">Ms. Li 数据分析师</h1>
+                <p class="subtitle">用数据驱动业务增长，从数据中发现价值</p>
+                <a href="resume.html" class="btn" target="_blank">查看简历</a>
+            </div>
+        </div>
+
+        <!-- 技术栈部分 -->
+        <div class="section">
+            <h2 class="section-title">技术栈</h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <span class="skill-icon">📊</span>
+                    <h3 class="skill-title">数据处理与分析</h3>
+                    <ul class="skill-list">
+                        <li>SQL - 多表关联、子查询、窗口函数</li>
+                        <li>Python - Pandas、NumPy、Scikit-learn</li>
+                        <li>Excel - 透视表、VLOOKUP、高级函数</li>
+                        <li>数据清洗、ETL流程</li>
+                    </ul>
                 </div>
-                <div class="tech-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="tech-icon">👁️</div>
-                    <h3 class="tech-name">计算机视觉</h3>
-                    <p class="tech-desc">CNN, GAN, 目标检测, 图像分割, 人脸识别, 3D视觉</p>
+                
+                <div class="skill-category">
+                    <span class="skill-icon">🤖</span>
+                    <h3 class="skill-title">机器学习</h3>
+                    <ul class="skill-list">
+                        <li>逻辑回归、决策树、随机森林</li>
+                        <li>集成学习 - Stacking、投票机制</li>
+                        <li>模型评估 - AUC、F1-Score、RMSE</li>
+                        <li>特征工程、模型优化</li>
+                    </ul>
                 </div>
-                <div class="tech-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="tech-icon">🗣️</div>
-                    <h3 class="tech-name">自然语言处理</h3>
-                    <p class="tech-desc">Transformer, BERT, GPT, 文本生成, 情感分析, 机器翻译</p>
+                
+                <div class="skill-category">
+                    <span class="skill-icon">📈</span>
+                    <h3 class="skill-title">数据可视化</h3>
+                    <ul class="skill-list">
+                        <li>Matplotlib、Seaborn</li>
+                        <li>Excel图表、数据仪表盘</li>
+                        <li>PowerPoint数据演示</li>
+                        <li>数据故事讲述</li>
+                    </ul>
                 </div>
-                <div class="tech-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="tech-icon">⚙️</div>
-                    <h3 class="tech-name">AI基础设施</h3>
-                    <p class="tech-desc">模型部署, 分布式训练, CUDA, Docker, Kubernetes, 模型优化</p>
+                
+                <div class="skill-category">
+                    <span class="skill-icon">🛠️</span>
+                    <h3 class="skill-title">开发工具</h3>
+                    <ul class="skill-list">
+                        <li>SQL Server、Doris</li>
+                        <li>GitLab、版本控制</li>
+                        <li>FastAPI、接口开发</li>
+                        <li>PyCharm、Jupyter Notebook</li>
+                    </ul>
                 </div>
             </div>
-        </section>
-        
-        <section class="section" id="interests">
-            <h2 class="section-title" data-aos="fade-up">研究方向</h2>
-            <div class="interests-container">
-                <div class="interest-item" data-aos="zoom-in" data-aos-delay="100">生成式AI</div>
-                <div class="interest-item" data-aos="zoom-in" data-aos-delay="200">多模态学习</div>
-                <div class="interest-item" data-aos="zoom-in" data-aos-delay="300">强化学习</div>
-                <div class="interest-item" data-aos="zoom-in" data-aos-delay="400">联邦学习</div>
-                <div class="interest-item" data-aos="zoom-in" data-aos-delay="500">可解释AI</div>
-                <div class="interest-item" data-aos="zoom-in" data-aos-delay="600">神经架构搜索</div>
-            </div>
-        </section>
-        
-        <section class="section" id="goals">
-            <h2 class="section-title" data-aos="fade-up">职业意向</h2>
-            <div class="goals-container" data-aos="fade-up">
-                <div class="goal-item">
-                    <div class="goal-icon">💼</div>
-                    <div class="goal-content">
-                        <h3>目标岗位</h3>
-                        <p>深度学习算法工程师 / AI研究员 / 机器学习工程师 / AI架构师</p>
-                    </div>
-                </div>
-                <div class="goal-item">
-                    <div class="goal-icon">🎯</div>
-                    <div class="goal-content">
-                        <h3>职业目标</h3>
-                        <p>致力于前沿AI技术的研究与应用，推动人工智能在复杂场景下的落地，构建下一代智能系统。</p>
-                    </div>
-                </div>
-                <div class="goal-item">
-                    <div class="goal-icon">🌟</div>
-                    <div class="goal-content">
-                        <h3>期望贡献</h3>
-                        <p>在生成式AI、多模态学习等领域做出创新性贡献，解决复杂现实世界中的AI挑战。</p>
-                    </div>
+        </div>
+
+        <!-- 研究方向部分 -->
+        <div class="section">
+            <h2 class="section-title">专业方向</h2>
+            <div class="research-container">
+                <div class="research-list">
+                    <span class="research-item">用户行为分析</span>
+                    <span class="research-item">预测建模</span>
+                    <span class="research-item">流失预警</span>
+                    <span class="research-item">质量分析</span>
+                    <span class="research-item">业务智能</span>
+                    <span class="research-item">数据驱动决策</span>
                 </div>
             </div>
-        </section>
-        
-        <footer>
-            <div class="contact-buttons">
-                <a href="https://github.com/liranran517" class="btn btn-github" target="_blank">
-                    GitHub 主页
-                </a>
-                <a href="mailto:liranran517@outlook.com" class="btn btn-email">
-                    联系我
-                </a>
+        </div>
+
+        <!-- 职业意向部分 -->
+        <div class="section">
+            <h2 class="section-title">职业意向</h2>
+            <div class="career-container">
+                <div class="career-item">
+                    <span class="career-icon">💼</span>
+                    <h3 class="career-subtitle">目标岗位</h3>
+                    <p class="career-desc">数据分析师 / 业务分析师 / 数据挖掘工程师</p>
+                </div>
+                
+                <div class="career-item">
+                    <span class="career-icon">🎯</span>
+                    <h3 class="career-subtitle">职业目标</h3>
+                    <p class="career-desc">致力于用数据分析解决业务问题，推动数据驱动文化的建立，成为业务决策的重要支撑。</p>
+                </div>
+                
+                <div class="career-item">
+                    <span class="career-icon">🌟</span>
+                    <h3 class="career-subtitle">期望贡献</h3>
+                    <p class="career-desc">在用户增长、风险控制、运营优化等领域发挥数据价值，为业务持续增长提供数据洞察。</p>
+                </div>
             </div>
-            <p class="copyright">© <span id="current-year"></span> Lucky | 探索智能边界，创造AI未来</p>
-        </footer>
+        </div>
+
+        <!-- 项目展示部分 -->
+        <div class="section projects-section">
+            <h2 class="section-title">精选项目</h2>
+            <div class="projects-container">
+                <div class="project-card">
+                    <h3 class="project-title">基于机器学习的糖尿病预测系统</h3>
+                    <p class="project-tech">Python · MATLAB · 集成学习</p>
+                    <p class="project-desc">构建高精度糖尿病风险预测模型，使用BP神经网络、逻辑回归、随机森林等算法，通过Stacking和加权投票策略提升预测准确率，最终AUC达0.89。</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3 class="project-title">用户流失预警与特征分析</h3>
+                    <p class="project-tech">SQL · Python · 逻辑回归</p>
+                    <p class="project-desc">从业务数据表中提取用户行为特征，构建流失预警模型，识别高风险用户并定位关键影响因素，为运营团队提供可落地的干预策略。</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3 class="project-title">制造过程质量异常检测</h3>
+                    <p class="project-tech">SQL · Python · SPC · 随机森林</p>
+                    <p class="project-desc">分析制造工艺参数与产品质量的关系，通过统计过程控制和机器学习模型识别异常批次，优化工艺参数，降低不良率1.8个百分点。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <div class="footer-links">
+                <a href="https://github.com/liranran517" target="_blank">GitHub 仓库</a>
+                <a href="mailto:liranran517@outlook.com">发送邮件</a>
+            </div>
+            <p class="footer-copyright">© 2026 Ms. Li. 数据分析师个人页面</p>
+        </div>
     </div>
 
     <script>
-        // 初始化AOS动画库
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 100
-        });
+        // 滚动动画效果
+        function handleScroll() {
+            const elements = document.querySelectorAll('.scroll-reveal');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (elementTop < windowHeight * 0.85) {
+                    element.classList.add('active');
+                }
+            });
+        }
 
-        // 设置当前年份
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        // 初始化滚动动画
+        function initScrollReveal() {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('scroll-reveal');
+            });
+        }
 
-        // 打字机效果
-        const typedTextElement = document.getElementById('typed-text');
-        const texts = [
-            "探索深度学习前沿",
-            "构建下一代AI系统",
-            "研究生成式AI与多模态学习",
-            "推动人工智能技术落地"
-        ];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        
-        function typeText() {
-            const currentText = texts[textIndex];
-            
-            if (isDeleting) {
-                typedTextElement.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typedTextElement.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
+        // 鼠标移动效果
+        function handleMouseMove(e) {
+            const cursor = document.querySelector('.cursor');
+            if (!cursor) {
+                const newCursor = document.createElement('div');
+                newCursor.className = 'cursor';
+                document.body.appendChild(newCursor);
             }
-            
-            if (!isDeleting && charIndex === currentText.length) {
-                isDeleting = true;
-                setTimeout(typeText, 2000);
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-                setTimeout(typeText, 500);
-            } else {
-                setTimeout(typeText, isDeleting ? 50 : 100);
-            }
-        }
-        
-        // 启动打字机效果
-        setTimeout(typeText, 1000);
-
-        // Three.js星空背景
-        let scene, camera, renderer, stars = [];
-
-        function initThree() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.getElementById('starfield').appendChild(renderer.domElement);
-
-            // 创建星星
-            for (let i = 0; i < 3000; i++) {
-                const star = new THREE.Mesh(
-                    new THREE.SphereGeometry(0.1, 24, 24),
-                    new THREE.MeshBasicMaterial({ color: 0xffffff })
-                );
-                
-                const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(2000));
-                star.position.set(x, y, z);
-                scene.add(star);
-                stars.push(star);
-            }
-
-            camera.position.z = 1;
-
-            animateStars();
+            const cursorElement = document.querySelector('.cursor');
+            cursorElement.style.left = e.clientX + 'px';
+            cursorElement.style.top = e.clientY + 'px';
         }
 
-        function animateStars() {
-            requestAnimationFrame(animateStars);
-            
-            stars.forEach(star => {
-                star.position.z += 0.5;
-                if (star.position.z > 1000) {
-                    star.position.z = -1000;
-                }
-                
-                // 添加闪烁效果
-                star.material.opacity = 0.5 + 0.5 * Math.sin(Date.now() * 0.001 + star.position.x);
-            });
-            
-            renderer.render(scene, camera);
-        }
-
-        // 窗口大小变化时更新
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        // 初始化Three.js
-        initThree();
-
-        // 初始化Particles.js
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 60, density: { enable: true, value_area: 800 } },
-                color: { value: "#0072ff" },
-                shape: { type: "circle" },
-                opacity: {
-                    value: 0.5,
-                    random: true,
-                    anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
-                },
-                size: {
-                    value: 3,
-                    random: true,
-                    anim: { enable: true, speed: 2, size_min: 0.1, sync: false }
-                },
-                line_linked: {
-                    enable: true,
-                    distance: 150,
-                    color: "#00c6ff",
-                    opacity: 0.4,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 1,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    out_mode: "out",
-                    bounce: false,
-                    attract: { enable: false, rotateX: 600, rotateY: 1200 }
-                }
-            },
-            interactivity: {
-                detect_on: "canvas",
-                events: {
-                    onhover: { enable: true, mode: "repulse" },
-                    onclick: { enable: true, mode: "push" },
-                    resize: true
-                },
-                modes: {
-                    repulse: { distance: 100, duration: 0.4 },
-                    push: { particles_nb: 4 }
-                }
-            },
-            retina_detect: true
-        });
-
-        // 神经网络连接线效果
-        const neuralCanvas = document.getElementById('neural-network');
-        const neuralCtx = neuralCanvas.getContext('2d');
-        
-        function resizeNeuralCanvas() {
-            neuralCanvas.width = window.innerWidth;
-            neuralCanvas.height = window.innerHeight;
-        }
-        
-        resizeNeuralCanvas();
-        window.addEventListener('resize', resizeNeuralCanvas);
-        
-        const nodes = [];
-        const connections = [];
-        
-        // 创建节点
-        for (let i = 0; i < 30; i++) {
-            nodes.push({
-                x: Math.random() * neuralCanvas.width,
-                y: Math.random() * neuralCanvas.height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5
-            });
-        }
-        
-        // 创建连接
-        for (let i = 0; i < nodes.length; i++) {
-            for (let j = i + 1; j < nodes.length; j++) {
-                if (Math.random() > 0.7) {
-                    connections.push({
-                        a: i,
-                        b: j,
-                        strength: Math.random() * 0.5 + 0.5
-                    });
-                }
-            }
-        }
-        
-        function animateNeuralNetwork() {
-            neuralCtx.clearRect(0, 0, neuralCanvas.width, neuralCanvas.height);
-            
-            // 更新节点位置
-            nodes.forEach(node => {
-                node.x += node.vx;
-                node.y += node.vy;
-                
-                if (node.x < 0 || node.x > neuralCanvas.width) node.vx *= -1;
-                if (node.y < 0 || node.y > neuralCanvas.height) node.vy *= -1;
-            });
-            
-            // 绘制连接线
-            neuralCtx.strokeStyle = 'rgba(0, 198, 255, 0.2)';
-            neuralCtx.lineWidth = 1;
-            
-            connections.forEach(conn => {
-                const a = nodes[conn.a];
-                const b = nodes[conn.b];
-                
-                const dx = a.x - b.x;
-                const dy = a.y - b.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-                
-                if (distance < 200) {
-                    neuralCtx.globalAlpha = conn.strength * (1 - distance / 200);
-                    neuralCtx.beginPath();
-                    neuralCtx.moveTo(a.x, a.y);
-                    neuralCtx.lineTo(b.x, b.y);
-                    neuralCtx.stroke();
-                }
-            });
-            
-            // 绘制节点
-            neuralCtx.fillStyle = 'rgba(0, 198, 255, 0.6)';
-            nodes.forEach(node => {
-                neuralCtx.beginPath();
-                neuralCtx.arc(node.x, node.y, 2, 0, Math.PI * 2);
-                neuralCtx.fill();
-            });
-            
-            neuralCtx.globalAlpha = 1;
-            requestAnimationFrame(animateNeuralNetwork);
-        }
-        
-        animateNeuralNetwork();
-
-        // 流星效果
-        function createMeteor() {
-            const meteor = document.createElement('div');
-            meteor.className = 'meteor';
-            
-            // 随机位置和大小
-            const left = Math.random() * 100;
-            const top = Math.random() * 50;
-            const size = Math.random() * 2 + 1;
-            
-            meteor.style.left = `${left}vw`;
-            meteor.style.top = `${top}vh`;
-            meteor.style.width = `${size}px`;
-            meteor.style.height = `${size}px`;
-            
-            document.getElementById('meteors-container').appendChild(meteor);
-            
-            // 流星动画
-            anime({
-                targets: meteor,
-                translateX: ['0vw', '100vw'],
-                translateY: ['0vh', '100vh'],
-                opacity: [0, 1, 0],
-                duration: Math.random() * 3000 + 2000,
-                easing: 'linear',
-                complete: function() {
-                    meteor.remove();
-                    // 创建新的流星
-                    setTimeout(createMeteor, Math.random() * 5000);
-                }
-            });
-        }
-        
-        // 初始化一些流星
-        for (let i = 0; i < 5; i++) {
-            setTimeout(createMeteor, Math.random() * 5000);
-        }
-
-        // 添加卡片悬停动画
-        document.querySelectorAll('.tech-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                anime({
-                    targets: this,
-                    scale: 1.05,
-                    duration: 300,
-                    easing: 'easeOutCubic'
-                });
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                anime({
-                    targets: this,
-                    scale: 1,
-                    duration: 300,
-                    easing: 'easeOutCubic'
-                });
-            });
-        });
-
-        // 添加按钮点击动画
-        document.querySelectorAll('.btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                // 创建点击波纹效果
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.classList.add('ripple');
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
-        });
-
-        // 添加滚动视差效果
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('#starfield');
-            if (parallax) {
-                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
-            }
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal();
+            handleScroll();
+            window.addEventListener('scroll', handleScroll);
+            document.addEventListener('mousemove', handleMouseMove);
         });
     </script>
+
+    <style>
+        /* 自定义光标效果 */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #29c4ff, #79449a);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 20px rgba(41, 196, 255, 0.5);
+        }
+
+        /* 增强的卡片悬停效果 */
+        .skill-category:hover,
+        .project-card:hover,
+        .career-item:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        /* 按钮点击效果 */
+        .btn:active {
+            transform: translateY(0) scale(0.95);
+        }
+    </style>
 </body>
 </html>
