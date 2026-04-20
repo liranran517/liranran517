@@ -2,7 +2,7 @@
 
 ![Data Analytics](https://cdn.pixabay.com/photo/2016/05/05/02/37/sunset-1373171_1280.jpg)
 
-### `李冉冉 | 数据分析师` 
+### `Ms. Li | 数据分析师` 
 
 - 📊 数据驱动的业务洞察者 
 - 💡 用数据讲述故事的分析师 
